@@ -14,7 +14,39 @@
 ### Association
 
 - has_many :products
-- has_many :comments
+- has_many :users_payments
+- has_many :payments, through: :users_payments
+
+## users_payments テーブル
+
+| Column     | Type       | Options                        |
+| ---------- | ---------- | ------------------------------ |
+| user_id    | references | null: false, foreign_key: true |
+| payment_id | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :payment
+
+
+## payments テーブル
+
+| Column          | Type       | Options     |
+| --------------- | ---------- | ----------- |
+| card_num        | text       | null: false |
+| expiration_date | integer    | null: false |
+| security_code   | integer    | null: false |
+| postcode        | integer    | null: false |
+| prefecture      | string     | null: false |
+| municipalities  | string     | null: false |
+| address         | integer    | null: false |
+| building_name   | string     |             |
+| phone_num       | integer    | null: false |
+### Association
+
+- has_many :users_payments
+- has_many :users, through: :users_payments
 
 
 ## products テーブル
@@ -32,22 +64,5 @@
 
 ### Association
 
-- has_many :comments
 - belongs_to :user
-
-
-
-## comments テーブル
-
-| Column  | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| comment | text       | null: false                    |
-| user    | references | null: false, foreign_key: true |
-| product | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
-- belongs_to :product
-
 
