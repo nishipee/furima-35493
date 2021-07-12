@@ -25,13 +25,12 @@
 | ------- | ---------- | ----------------- |
 | user    | references | foreign_key: true |
 | product | references | foreign_key: true |
-| address | references | foreign_key: true |
 
 ### Association
 
-- has_one :product
-- has_one :address
 - belongs_to :user
+- belongs_to :product
+- has_one :address
 
 
 ## products テーブル
@@ -47,7 +46,6 @@
 | scheduled_day_id | integer    | null: false       |
 | price            | integer    | null: false       |
 | user             | references | foreign_key: true |
-| purchase_history | references | foreign_key: true |
 
 ### Association
 
@@ -60,7 +58,7 @@
 | Column           | Type       | Options           |
 | ---------------- | ---------- | ----------------- |
 | postcode         | string     | null: false       |
-| area_id          | string     | null: false       |
+| area_id          | integer    | null: false       |
 | city             | string     | null: false       |
 | address          | string     | null: false       |
 | building_name    | string     |                   |
@@ -69,4 +67,4 @@
 
 ### Association
 
-- has_one :purchase_history
+- belongs_to :purchase_history
