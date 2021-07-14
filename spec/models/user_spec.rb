@@ -80,6 +80,11 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include "Birthday can't be blank"
       end
+      it "emailは@がなければ登録できない" do
+        @user.email = "testtest"
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Email is invalid"
+      end
       it "emailが重複していると登録できない" do
         another_user = FactoryBot.build(:user)
         another_user.save
@@ -97,19 +102,19 @@ RSpec.describe User, type: :model do
         @user.password = "aaaaaa"
         @user.password_confirmation = "aaaaaa"
         @user.valid?
-        expect(@user.errors.full_messages).to include "Password is invaild. Include both letters and numbers"
+        expect(@user.errors.full_messages).to include "Password is invalid. Include both letters and numbers"
       end
       it "passwordが数字だけでは登録できない" do
         @user.password = "000000"
         @user.password_confirmation = "000000"
         @user.valid?
-        expect(@user.errors.full_messages).to include "Password is invaild. Include both letters and numbers"
+        expect(@user.errors.full_messages).to include "Password is invalid. Include both letters and numbers"
       end
       it "passwordが全角では登録できない" do
         @user.password = "xyz１２３"
         @user.password_confirmation = "xyz１２３"
         @user.valid?
-        expect(@user.errors.full_messages).to include "Password is invaild. Include both letters and numbers"
+        expect(@user.errors.full_messages).to include "Password is invalid. Include both letters and numbers"
       end
       it "last_nameが英字では登録できない" do
         @user.last_name = "yamada"
