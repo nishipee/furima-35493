@@ -95,7 +95,6 @@ RSpec.describe Product, type: :model do
       it "priceが999999999以上では出品できない" do
         @product.price = "10000000"
         @product.valid?
-        binding.pry
         expect(@product.errors.full_messages).to include "Price is out of setting range"
       end
       it "priceが全角では出品できない" do
