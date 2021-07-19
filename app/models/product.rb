@@ -32,5 +32,6 @@ class Product < ApplicationRecord
     validates :introduction
   end
   
-  validates :price, presence: true, inclusion: { in: 300..9_999_999, message: "is out of setting range"}, format: { with: /\A[0-9]+\z/, message: "is invalid. Input half-width characters" }
+  validates :price, presence: true, inclusion: { in: 300..9_999_999, message: "is out of setting range"}
+  validates :price, numericality: { with: /\A[0-9]+\z/, message: "is invalid. Input half-width characters" }
 end
