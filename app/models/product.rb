@@ -5,17 +5,9 @@ class Product < ApplicationRecord
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :area
-
-  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
-
-  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :charge
-
-  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :scheduled_day
-
-  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :status
 
   with_options presence: true, numericality: { other_than: 1, message: "can't be blank" } do
