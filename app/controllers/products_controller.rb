@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_product, only: [:show, :edit, :update, :move_to_index]
   before_action :move_to_index, only: [:edit, :update]
+  
 
   def index
     @products = Product.includes(:user).order("created_at DESC")
@@ -20,15 +22,12 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
   end
 
   def edit
-    @product = Product.find(params[:id])
   end
 
   def update
-    @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to root_path
     else
@@ -41,9 +40,12 @@ class ProductsController < ApplicationController
     params.require(:product).permit(:image, :name, :introduction, :category_id, :status_id, :charge_id, :area_id, :scheduled_day_id, :price).merge(user_id: current_user.id)
   end
 
-  def move_to_index
+  def set_product
     @product = Product.find(params[:id])
-    if @product.user != current_user || @product.purchase_history.present?
+  end
+
+  def move_to_index
+    if @product.user != current_user #|| @product.purchase_history.present?
       redirect_to root_path
     end
   end
