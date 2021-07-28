@@ -70,6 +70,11 @@ RSpec.describe PurchaseHistoryAddress, type: :model do
         @purchase_history_address.valid?
         expect(@purchase_history_address.errors.full_messages).to include("Phone num is too long (maximum is 11 characters)")
       end
+      it "電話番号が英数混合では交遊できない" do
+        @purchase_history_address.phone_num = "090abcd5678"
+        @purchase_history_address.valid?
+        expect(@purchase_history_address.errors.full_messages).to include("Phone num is invalid. Input only number")
+      end
       it "userが紐づいていないと購入できない" do
         @purchase_history_address.user_id = nil
         @purchase_history_address.valid?

@@ -1,10 +1,10 @@
 class PurchaseHistoriesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_product
   before_action :move_to_index, only: [:index, :create]
 
   def index
     @purchase_history_address = PurchaseHistoryAddress.new
-    @product = Product.find(params[:product_id])
   end
 
   def create
@@ -19,13 +19,15 @@ class PurchaseHistoriesController < ApplicationController
   end
 
   private
-  def purchase_history_address_params
+  def set_product
     @product = Product.find(params[:product_id])
+  end
+
+  def purchase_history_address_params
     params.require(:purchase_history_address).permit(:postcode, :area_id, :city, :address, :building_name, :phone_num).merge(user_id: current_user.id, product_id: params[:product_id], price: @product.price, token: params[:token])
   end
 
   def move_to_index
-    @product = Product.find(params[:product_id])
     if current_user == @product.user || @product.purchase_history.present?
       redirect_to root_path
     end
