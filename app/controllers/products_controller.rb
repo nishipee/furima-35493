@@ -51,7 +51,7 @@ class ProductsController < ApplicationController
   end
 
   def move_to_index
-    if @product.user != current_user #|| @product.purchase_history.present?
+    if @product.user != current_user || @product.purchase_history.present?
       redirect_to root_path
     end
   end
